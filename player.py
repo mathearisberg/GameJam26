@@ -28,8 +28,9 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        self.normal_width = BASE_WIDTH
-        self.normal_height = BASE_HEIGHT
+        # Slightly bigger base player size
+        self.normal_width = int(BASE_WIDTH * 1.25)
+        self.normal_height = int(BASE_HEIGHT * 1.25)
         self.grown_scale = 1.8
 
         # ---- Load GIF frames ----
