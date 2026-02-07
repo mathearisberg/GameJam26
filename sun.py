@@ -1,19 +1,26 @@
 import pygame
 import random
+import os
 from settings import *
 
 class Sun(pygame.sprite.Sprite):
     def __init__(self, speed):
         super().__init__()
-        self.image = pygame.Surface((30, 30))
-        self.image.fill((255, 255, 0))
-        self.rect = self.image.get_rect()
-        self.rect.x = WIDTH + 30
-        self.rect.y = random.randint(50, HEIGHT - 100)
         self.speed = speed
+
+        # ---- Load PNG ----
+        png_path = os.path.join("images", "sun.png")  # Sett inn filen din her
+        self.image = pygame.image.load(png_path).convert_alpha()  # Beholder gjennomsiktighet
+
+        
+        width, height = 70, 70
+        self.image = pygame.transform.scale(self.image, (width, height))
+
+        self.rect = self.image.get_rect()
+        self.rect.x = WIDTH + width
+        self.rect.y = random.randint(50, HEIGHT - 100)
 
     def update(self):
         self.rect.x -= self.speed
         if self.rect.right < 0:
             self.kill()
-
