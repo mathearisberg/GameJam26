@@ -8,16 +8,13 @@ class Bird(pygame.sprite.Sprite):
         self.speed = speed
 
         self.image = pygame.Surface((50, 30))
-        self.image.fill((120, 120, 120))  # grey bird
+        self.image.fill((255, 0, 0))  # red bird
         self.rect = self.image.get_rect()
 
         self.rect.x = WIDTH + 50
 
         # Fixed flight lanes (Google Dino style)
-        self.rect.y = random.choice([
-            HEIGHT - 180,
-            HEIGHT - 260
-        ])
+        self.rect.y = BIRD_Y
 
     def update(self):
         self.rect.x -= self.speed

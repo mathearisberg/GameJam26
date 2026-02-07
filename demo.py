@@ -1,12 +1,12 @@
 import pygame
 import sys
 import os
-
 from settings import *
 from player import Player
 from gardener import Gardener
 import random
 from sun import Sun
+from bird import Bird
 
 
 pygame.init()
@@ -28,14 +28,15 @@ background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
 SPAWN_OBSTACLE_EVENT = pygame.USEREVENT + 1
 SPAWN_SUN_EVENT = pygame.USEREVENT + 2
-
+SPAWN_BIRD_EVENT = pygame.USEREVENT + 3
 pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, 1400)
 pygame.time.set_timer(SPAWN_SUN_EVENT, 2200)
-
+pygame.time.set_timer(SPAWN_BIRD_EVENT, 2000)
 
 all_sprites = pygame.sprite.Group()
 obstacles = pygame.sprite.Group()
 suns = pygame.sprite.Group()
+birds = pygame.sprite.Group()
 
 
 
@@ -46,6 +47,7 @@ def reset_game():
     all_sprites.empty()
     obstacles.empty()
     suns.empty()
+    birds.empty()
 
     player = Player()
     all_sprites.add(player)
@@ -55,6 +57,7 @@ def reset_game():
 all_sprites = pygame.sprite.Group()
 obstacles = pygame.sprite.Group()
 suns = pygame.sprite.Group()
+birds = pygame.sprite.Group()
 
 player = reset_game()
 game_time = 0
@@ -62,8 +65,6 @@ current_speed = BASE_SPEED
 game_over = False
 score = 0
 
-difficulty_ratio = (current_speed - BASE_SPEED) / (MAX_SPEED - BASE_SPEED)
-difficulty_ratio = max(0, min(difficulty_ratio, 1))
 
 
 # --------------------
@@ -78,6 +79,8 @@ while True:
             BASE_SPEED + game_time * SPEED_INCREASE_RATE,
             MAX_SPEED
         )
+        difficulty_ratio = (current_speed - BASE_SPEED) / (MAX_SPEED - BASE_SPEED)
+        difficulty_ratio = max(0, min(difficulty_ratio, 1))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -111,6 +114,28 @@ while True:
                 s = Sun(current_speed)
                 suns.add(s)
                 all_sprites.add(s)
+        
+        if event.type == SPAWN_BIRD_EVENT and not game_over:
+            if event.type == SPAWN_BIRD_EVENT and not game_over:
+                print("FORCING BIRD SPAWN")
+
+                b = Bird(5)
+                birds.add(b)
+                all_sprites.add(b)
+
+
+            # birds are rarer than gardeners
+            bird_chance = 0.3 + difficulty_ratio * 0.5
+
+            if random.random() > bird_chance:
+                continue
+
+            
+            
+            b = Bird(current_speed * 1.1)
+            birds.add(b)
+            all_sprites.add(b)
+
 
     if not game_over:
         all_sprites.update()
@@ -125,6 +150,13 @@ while True:
                     g.kill()
             else:
                 game_over = True
+
+        if pygame.sprite.spritecollide(player, birds, False):
+            if player.invincible:
+                pygame.sprite.spritecollide(player, birds, True)
+            else:
+                game_over = True
+
 
     # --------------------
     # DRAW

@@ -19,4 +19,6 @@ SPAWN_SUN_TIME = 2200
 
 SPAWN_DIFFICULTY_START = 0.3   # early game spawn chance
 SPAWN_DIFFICULTY_END = 0.9     # late game spawn chance
+BIRD_DIFFICULTY_THRESHOLD = 0.35
+BIRD_Y = HEIGHT - BASE_HEIGHT
 
