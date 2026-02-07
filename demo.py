@@ -110,6 +110,11 @@ def run_game():
                     game_over = False
                     score = 0
 
+                    # Reset speed scaling so a new run starts slow again
+                    game_time = 0
+                    current_speed = BASE_SPEED
+                    difficulty_ratio = 0
+
             if event.type == SPAWN_OBSTACLE_EVENT and not game_over:
                 spawn_chance = (
                     SPAWN_DIFFICULTY_START +
