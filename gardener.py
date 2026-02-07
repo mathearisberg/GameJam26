@@ -17,7 +17,7 @@ class Gardener(pygame.sprite.Sprite):
 
         gif_path = os.path.join("images", "gartnerGIF.gif")  
    
-        width, height = 40, 80
+        width, height = 100, 200
         self.image = load_gif_frame(gif_path, (width, height))
 
         self.rect = self.image.get_rect()
