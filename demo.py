@@ -87,7 +87,8 @@ while True:
     # --------------------
     screen.fill((30, 30, 40))
     all_sprites.draw(screen)
-
+    player.draw_growth_bar(screen) 
+    
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
     screen.blit(score_text, (10, 10))
 
