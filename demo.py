@@ -5,6 +5,7 @@ import os
 from settings import *
 from player import Player
 from gardener import Gardener
+import random
 from sun import Sun
 
 
