@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
         w = int(self.normal_width * self.grown_scale)
         h = int(self.normal_height * self.grown_scale)
 
-        gif_path = os.path.join("images", "ezgif.com-animated-gif-maker.gif")
+        gif_path = os.path.join("images", "planteGif.gif")
         self.frames = load_gif_frames(gif_path, (w, h))
 
         center = self.rect.center
@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def shrink(self):
-        gif_path = os.path.join("images", "ezgif.com-animated-gif-maker.gif")
+        gif_path = os.path.join("images", "planteGif.gif")
         self.frames = load_gif_frames(
             gif_path,
             (self.normal_width, self.normal_height)
