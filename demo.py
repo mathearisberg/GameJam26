@@ -65,7 +65,12 @@ current_speed = BASE_SPEED
 game_over = False
 score = 0
 
-
+def can_spawn_at_right_edge(groups, min_gap):
+    for group in groups:
+        for sprite in group:
+            if abs(sprite.rect.x - WIDTH) < min_gap:
+                return False
+    return True
 
 # --------------------
 # MAIN LOOP
@@ -102,9 +107,10 @@ while True:
             )
 
             if random.random() < spawn_chance:
-                g = Gardener(current_speed)
-                obstacles.add(g)
-                all_sprites.add(g)
+                if can_spawn_at_right_edge([birds, obstacles], MIN_HORIZONTAL_GAP):
+                    g = Gardener(current_speed)
+                    obstacles.add(g)
+                    all_sprites.add(g)
 
 
         if event.type == SPAWN_SUN_EVENT and not game_over:
@@ -116,25 +122,13 @@ while True:
                 all_sprites.add(s)
         
         if event.type == SPAWN_BIRD_EVENT and not game_over:
-            if event.type == SPAWN_BIRD_EVENT and not game_over:
-                print("FORCING BIRD SPAWN")
-
-                b = Bird(5)
-                birds.add(b)
-                all_sprites.add(b)
-
-
-            # birds are rarer than gardeners
             bird_chance = 0.3 + difficulty_ratio * 0.5
 
-            if random.random() > bird_chance:
-                continue
-
-            
-            
-            b = Bird(current_speed * 1.1)
-            birds.add(b)
-            all_sprites.add(b)
+            if random.random() < bird_chance:
+                if can_spawn_at_right_edge([obstacles, birds], MIN_HORIZONTAL_GAP):
+                    b = Bird(current_speed * 1.1)
+                    birds.add(b)
+                    all_sprites.add(b)
 
 
     if not game_over:
