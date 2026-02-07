@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
         self.grown_scale = 1.8
 
         # ---- Load GIF frames ----
-        gif_path = os.path.join("images", "ezgif.com-animated-gif-maker.gif")
+        gif_path = os.path.join("images", "planteGif.gif")
         self.frames = load_gif_frames(
             gif_path,
             (self.normal_width, self.normal_height)
