@@ -16,3 +16,7 @@ INVINCIBLE_TIME = 3000  # ms
 
 SPAWN_OBSTACLE_TIME = 1400
 SPAWN_SUN_TIME = 2200
+
+SPAWN_DIFFICULTY_START = 0.3   # early game spawn chance
+SPAWN_DIFFICULTY_END = 0.9     # late game spawn chance
+

@@ -4,6 +4,7 @@ from settings import *
 from player import Player
 from gardener import Gardener
 from sun import Sun
+import random
 pygame.init()
 
 
@@ -42,6 +43,10 @@ current_speed = BASE_SPEED
 game_over = False
 score = 0
 
+difficulty_ratio = (current_speed - BASE_SPEED) / (MAX_SPEED - BASE_SPEED)
+difficulty_ratio = max(0, min(difficulty_ratio, 1))
+
+
 # --------------------
 # MAIN LOOP
 # --------------------
@@ -69,14 +74,24 @@ while True:
                 score = 0
 
         if event.type == SPAWN_OBSTACLE_EVENT and not game_over:
-            g = Gardener(current_speed)
-            obstacles.add(g)
-            all_sprites.add(g)
+            spawn_chance = (
+                SPAWN_DIFFICULTY_START +
+                difficulty_ratio * (SPAWN_DIFFICULTY_END - SPAWN_DIFFICULTY_START)
+            )
+
+            if random.random() < spawn_chance:
+                g = Gardener(current_speed)
+                obstacles.add(g)
+                all_sprites.add(g)
+
 
         if event.type == SPAWN_SUN_EVENT and not game_over:
-            s = Sun(current_speed)
-            suns.add(s)
-            all_sprites.add(s)
+            sun_chance = max(0.15, 0.6 - difficulty_ratio * 0.4)
+
+            if random.random() < sun_chance:
+                s = Sun(current_speed)
+                suns.add(s)
+                all_sprites.add(s)
 
     if not game_over:
         all_sprites.update()
