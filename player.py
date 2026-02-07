@@ -29,8 +29,8 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Slightly bigger base player size
-        self.normal_width = int(BASE_WIDTH * 1.25)
-        self.normal_height = int(BASE_HEIGHT * 1.25)
+        self.normal_width = int(BASE_WIDTH * 2.25)
+        self.normal_height = int(BASE_HEIGHT * 2.25)
         self.grown_scale = 1.8
 
         # ---- Load GIF frames ----
@@ -57,13 +57,13 @@ class Player(pygame.sprite.Sprite):
         self.is_grown = False
         self.invincible = False
 
-        self.max_jumps = 2
+        self.max_jumps = 3
         self.jumps_left = self.max_jumps
         self.jump_strength = JUMP_STRENGTH
 
     def jump(self):
         if self.jumps_left > 0:
-            self.vel_y = self.jump_strength
+            self.vel_y = self.jump_strength * 1.15
             self.jumps_left -= 1
 
     def grow(self):
