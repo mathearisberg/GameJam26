@@ -21,8 +21,21 @@ font = pygame.font.SysFont(None, 32)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 background_path = os.path.join(BASE_DIR, "images", "hage1.jpg")
 
+
 background = pygame.image.load(background_path).convert()
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+# Load ground image
+ground_path = os.path.join(BASE_DIR, "images", "ground.png")
+ground_image = pygame.image.load(ground_path).convert_alpha()
+
+# Scale ground to screen width, keep its height
+ground_height = ground_image.get_height()
+ground_image = pygame.transform.scale(ground_image, (WIDTH, ground_height))
+
+# Ground scrolling
+ground_x = 0
+GROUND_SCROLL_SPEED = BASE_SPEED
 
 
 
@@ -78,6 +91,10 @@ while True:
             BASE_SPEED + game_time * SPEED_INCREASE_RATE,
             MAX_SPEED
         )
+        # Scroll ground
+        ground_x -= current_speed
+        if ground_x <= -WIDTH:
+            ground_x = 0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -130,6 +147,9 @@ while True:
     # DRAW
     # --------------------
     screen.blit(background, (0, 0))
+    # Draw scrolling ground (tiled)
+    screen.blit(ground_image, (ground_x, HEIGHT - ground_height))
+    screen.blit(ground_image, (ground_x + WIDTH, HEIGHT - ground_height))
     all_sprites.draw(screen)
 
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
