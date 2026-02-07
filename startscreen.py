@@ -18,13 +18,19 @@ def show_start_screen():
     start_bg = pygame.image.load(start_bg_path).convert()
     start_bg = pygame.transform.scale(start_bg, (WIDTH, HEIGHT))
 
-    button_width, button_height = 200, 60
-    button_color = (50, 200, 50)
-    button_hover = (70, 220, 70)
-    button_rect = pygame.Rect(WIDTH // 2 - button_width // 2, HEIGHT // 2, button_width, button_height)
+    button_img_path = os.path.join(BASE_DIR, "images", "start-knapp.png")
+    button_img = pygame.image.load(button_img_path).convert_alpha()
+
+    # Make the start button small and clean
+    BUTTON_WIDTH = 240
+    BUTTON_HEIGHT = 150
+    button_img = pygame.transform.smoothscale(
+        button_img, (BUTTON_WIDTH, BUTTON_HEIGHT)
+    )
+
+    button_rect = button_img.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
     title_font = pygame.font.SysFont(None, 64)
-    button_font = pygame.font.SysFont(None, 36)
 
     # ---- Load and prepare animated plant GIF (Pillow -> pygame surfaces) ----
     gif_path = os.path.join(BASE_DIR, "images", "planteGif.gif")
@@ -138,16 +144,10 @@ def show_start_screen():
         title_text = title_font.render("Growing Plant", True, (255, 255, 255))
         screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
 
-        if button_rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, button_hover, button_rect)
-            if mouse_pressed:
-                running = False  # Gå videre til spillet
-        else:
-            pygame.draw.rect(screen, button_color, button_rect)
+        screen.blit(button_img, button_rect.topleft)
 
-        button_text = button_font.render("PLAY", True, (255, 255, 255))
-        screen.blit(button_text, (button_rect.centerx - button_text.get_width() // 2,
-                                  button_rect.centery - button_text.get_height() // 2))
+        if button_rect.collidepoint(mouse_pos) and mouse_pressed:
+            running = False  # Start game
 
         dt_ms = clock.get_time()
 
