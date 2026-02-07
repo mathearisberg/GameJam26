@@ -77,24 +77,19 @@ class Player(pygame.sprite.Sprite):
             self.is_grown = False
             self.shrink()
 
-    def draw_growth_bar(self, surface):
+    def should_tint(self):
         if not self.invincible:
-            return
+            return False
 
         time_left = self.invincible_end - pygame.time.get_ticks()
-        ratio = max(time_left / INVINCIBLE_TIME, 0)
+        ratio = time_left / INVINCIBLE_TIME
 
-        BAR_WIDTH = self.rect.width
-        BAR_HEIGHT = 6
+        # No tinting for first half
+        if ratio > 0.5:
+            return False
 
-        x = self.rect.left
-        y = self.rect.top - 10
+        # Blink faster as time runs out
+        blink_speed = int(200 * ratio) + 50  # ms
+        return (pygame.time.get_ticks() // blink_speed) % 2 == 0
 
-        # background
-        pygame.draw.rect(surface, (60, 60, 60),
-                        (x, y, BAR_WIDTH, BAR_HEIGHT))
-
-        # foreground (shrinking)
-        pygame.draw.rect(surface, (255, 200, 50),
-                        (x, y, BAR_WIDTH * ratio, BAR_HEIGHT))
 

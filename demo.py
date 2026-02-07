@@ -86,9 +86,18 @@ while True:
     # DRAW
     # --------------------
     screen.fill((30, 30, 40))
-    all_sprites.draw(screen)
-    player.draw_growth_bar(screen) 
-    
+    for sprite in all_sprites:
+        if sprite == player:
+            if player.should_tint():
+                tinted = player.image.copy()
+                tinted.fill((255, 255, 255), special_flags=pygame.BLEND_RGB_ADD)
+                screen.blit(tinted, player.rect)
+            else:
+                screen.blit(player.image, player.rect)
+        else:
+            screen.blit(sprite.image, sprite.rect)
+
+
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
     screen.blit(score_text, (10, 10))
 
