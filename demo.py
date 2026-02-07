@@ -1,10 +1,28 @@
 import pygame
 import sys
+import os
+
 from settings import *
 from player import Player
 from gardener import Gardener
 from sun import Sun
+
+
 pygame.init()
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Growing Plant")
+
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 32)
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+background_path = os.path.join(BASE_DIR, "images", "hage1.jpg")
+
+background = pygame.image.load(background_path).convert()
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
 
 
 SPAWN_OBSTACLE_EVENT = pygame.USEREVENT + 1
@@ -13,10 +31,11 @@ SPAWN_SUN_EVENT = pygame.USEREVENT + 2
 pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, 1400)
 pygame.time.set_timer(SPAWN_SUN_EVENT, 2200)
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Growing Plant")
-clock = pygame.time.Clock()
-font = pygame.font.SysFont(None, 32)
+
+all_sprites = pygame.sprite.Group()
+obstacles = pygame.sprite.Group()
+suns = pygame.sprite.Group()
+
 
 # --------------------
 # GAME SETUP
@@ -85,7 +104,7 @@ while True:
     # --------------------
     # DRAW
     # --------------------
-    screen.fill((30, 30, 40))
+    screen.blit(background, (0, 0))
     all_sprites.draw(screen)
 
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
