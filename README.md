@@ -4,7 +4,8 @@ Velkommen til "Growing Plant", et spill inspirert av klassiske spill med noen to
 
 # Hvordan kjøre spillet? 
 For å starte spillet, kjører du følgende kommando i terminalen: 
-<python3 startplay.py>
+
+--> python3 startplay.py
 
 
 # Gruppe
