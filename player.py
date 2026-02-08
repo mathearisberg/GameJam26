@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         # --- Sizes ---
         self.normal_size = (int(BASE_WIDTH), int(BASE_HEIGHT))
         self.crouch_size = (int(BASE_WIDTH), int(CROUCH_HEIGHT))
-        self.grown_scale = 1.8
+        self.grown_scale = GROWTH_SCALE
 
         # --- State ---
         self.is_crouching = False
@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         self.is_grown = False
         self.invincible = False
 
-        self.max_jumps = 3
+        self.max_jumps = 1
         self.jumps_left = self.max_jumps
         self.jump_strength = JUMP_STRENGTH
 
