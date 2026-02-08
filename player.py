@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         # --- Sizes ---
         self.normal_size = (int(BASE_WIDTH), int(BASE_HEIGHT))
         self.crouch_size = (int(BASE_WIDTH), int(CROUCH_HEIGHT))
-        self.grown_scale = 1.8
+        self.grown_scale = GROWTH_SCALE
 
         # --- State ---
         self.is_crouching = False
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
 
         # --- Load animations ---
         self.normal_frames = load_gif_frames(
-            os.path.join("images", "ezgif.com-animated-gif-maker.gif"),
+            os.path.join("images", "planteGif.gif"),
             self.normal_size
         )
         self.crouch_frames = load_gif_frames(
@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         self.is_grown = False
         self.invincible = False
 
-        self.max_jumps = 3
+        self.max_jumps = 1
         self.jumps_left = self.max_jumps
         self.jump_strength = JUMP_STRENGTH
 
@@ -101,7 +101,7 @@ class Player(pygame.sprite.Sprite):
         h = int(BASE_HEIGHT * self.grown_scale)
 
         grown_frames = load_gif_frames(
-            os.path.join("images", "ezgif.com-animated-gif-maker.gif"),
+            os.path.join("images", "planteGif.gif"),
             (w, h)
         )
 
