@@ -29,17 +29,15 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        # --- Sizes ---
+  
         self.normal_size = (int(BASE_WIDTH), int(BASE_HEIGHT))
         self.crouch_size = (int(BASE_WIDTH), int(CROUCH_HEIGHT))
         self.grown_scale = GROWTH_SCALE
 
-        # --- State ---
         self.is_crouching = False
         self.is_grown = False
         self.invincible = False
 
-        # --- Load animations ---
         self.normal_frames = load_gif_frames(
             os.path.join("images", "planteGif.gif"),
             self.normal_size
@@ -59,17 +57,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = PLAYER_X
         self.rect.centery = HEIGHT // 2
 
-        # --- Physics ---
         self.vel_y = 0
-
-        # --- Second-tap jump boost (no timing) ---
         self.boost_used = False
 
         self.reset_state()
 
-    # --------------------
-    # STATE
-    # --------------------
+  
     def reset_state(self):
         self.is_grown = False
         self.invincible = False
@@ -79,9 +72,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_strength = JUMP_STRENGTH
         self.boost_used = False
 
-    # --------------------
-    # ACTIONS
-    # --------------------
+
     def jump(self):
         if self.is_crouching:
             return
@@ -101,7 +92,6 @@ class Player(pygame.sprite.Sprite):
         self.invincible = True
         self.invincible_end = pygame.time.get_ticks() + INVINCIBLE_TIME
 
-        # force uncrouch
         self.is_crouching = False
 
         self.max_jumps = 1
@@ -122,22 +112,16 @@ class Player(pygame.sprite.Sprite):
         self._set_frames(self.normal_frames)
         self.reset_state()
 
-    # --------------------
-    # UPDATE
-    # --------------------
     def update(self):
-        # --- Animate ---
         self.frame_timer += self.animation_speed
         if self.frame_timer >= 1:
             self.frame_timer = 0
             self.frame_index = (self.frame_index + 1) % len(self.frames)
             self.image = self.frames[self.frame_index]
 
-        # --- Gravity ---
         self.vel_y += GRAVITY
         self.rect.y += self.vel_y
 
-        # --- Bounds ---
         if self.rect.top < 0:
             self.rect.top = 0
             self.vel_y = 0
@@ -148,15 +132,12 @@ class Player(pygame.sprite.Sprite):
             self.jumps_left = self.max_jumps
             self.boost_used = False
 
-        # --- Invincibility timeout ---
+
         if self.invincible and pygame.time.get_ticks() > self.invincible_end:
             self.invincible = False
             self.is_grown = False
             self.shrink()
 
-    # --------------------
-    # CROUCH
-    # --------------------
     def set_crouch(self, crouching: bool):
         if crouching == self.is_crouching:
             return
@@ -174,9 +155,6 @@ class Player(pygame.sprite.Sprite):
         self.is_crouching = crouching
         self.rect.bottom = bottom
 
-    # --------------------
-    # INTERNAL
-    # --------------------
     def _set_frames(self, frames):
         center = self.rect.center
         self.frames = frames

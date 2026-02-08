@@ -32,7 +32,6 @@ class Bird(pygame.sprite.Sprite):
 
         self.speed = speed
 
-        # --- Load bird animation ---
         self.frames = load_gif_frames(
             os.path.join("images", "fung.gif"),
             (BIRD_WIDTH, BIRD_HEIGHT)
@@ -47,22 +46,17 @@ class Bird(pygame.sprite.Sprite):
 
         self.image = self.frames[0]
         self.rect = self.image.get_rect()
-
-        # Spawn just off screen
         self.rect.x = WIDTH + 40
-
-        # Fixed flight height (forces crouch later)
         self.rect.y = BIRD_Y
 
     def update(self):
-        # --- Animate ---
         self.frame_timer += self.animation_speed
+        
         if self.frame_timer >= 1:
             self.frame_timer = 0
             self.frame_index = (self.frame_index + 1) % len(self.frames)
             self.image = self.frames[self.frame_index]
 
-        # --- Move ---
         self.rect.x -= self.speed
 
         if self.rect.right < 0:
