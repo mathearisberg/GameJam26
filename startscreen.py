@@ -6,6 +6,7 @@ from PIL import Image
 from settings import *
 
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Growing Plant")
 clock = pygame.time.Clock()
@@ -44,6 +45,10 @@ def load_gif(path, max_size):
 
 
 def show_start_screen():
+    pygame.mixer.music.load("sounds/Background_musikk_startside.mp3")
+    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.play(-1)
+    
     start_bg = pygame.image.load(
         os.path.join(BASE_DIR, "images", "hage1.jpg")
     ).convert()
@@ -126,6 +131,7 @@ def show_start_screen():
             screen.blit(f, (WIDTH - f.get_width() - 20, 20))
 
         pygame.display.flip()
+    pygame.mixer.music.stop()
 
 
 if __name__ == "__main__":
