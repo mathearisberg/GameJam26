@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
 
         # --- Load animations ---
         self.normal_frames = load_gif_frames(
-            os.path.join("images", "ezgif.com-animated-gif-maker.gif"),
+            os.path.join("images", "planteGif"),
             self.normal_size
         )
         self.crouch_frames = load_gif_frames(
