@@ -9,9 +9,6 @@ from gardener import Gardener
 from sun import Sun
 from bird import Bird
 
-# --------------------
-# INIT
-# --------------------
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load("sounds/backgorund_sound_when_playing.mp3")
@@ -29,9 +26,7 @@ pygame.display.set_caption("Growing Plant")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 32)
 
-# --------------------
-# ASSETS
-# --------------------
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 background = pygame.image.load(
@@ -46,9 +41,7 @@ ground_height = ground_image.get_height()
 ground_image = pygame.transform.scale(ground_image, (WIDTH, ground_height))
 ground_x = 0
 
-# --------------------
-# EVENTS
-# --------------------
+
 SPAWN_OBSTACLE_EVENT = pygame.USEREVENT + 1
 SPAWN_SUN_EVENT = pygame.USEREVENT + 2
 SPAWN_BIRD_EVENT = pygame.USEREVENT + 3
@@ -57,17 +50,12 @@ pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, 1400)
 pygame.time.set_timer(SPAWN_SUN_EVENT, 2200)
 pygame.time.set_timer(SPAWN_BIRD_EVENT, 2000)
 
-# --------------------
-# GROUPS
-# --------------------
 all_sprites = pygame.sprite.Group()
 obstacles = pygame.sprite.Group()
 suns = pygame.sprite.Group()
 birds = pygame.sprite.Group()
 
-# --------------------
-# HELPERS
-# --------------------
+
 def can_spawn_at_right_edge(groups, min_gap):
     for group in groups:
         for sprite in group:
@@ -86,9 +74,7 @@ def reset_game():
 
     return player
 
-# --------------------
-# GAME STATE
-# --------------------
+
 player = reset_game()
 game_time = 0
 current_speed = BASE_SPEED
@@ -96,13 +82,10 @@ difficulty_ratio = 0
 game_over = False
 score = 0
 
-# --------------------
-# MAIN LOOP
-# --------------------
+
 while True:
     dt = clock.tick(FPS)
 
-    # ---- PROGRESSION ----
     if not game_over:
         game_time += dt
         current_speed = min(
@@ -113,16 +96,15 @@ while True:
         difficulty_ratio = (current_speed - BASE_SPEED) / (MAX_SPEED - BASE_SPEED)
         difficulty_ratio = max(0, min(difficulty_ratio, 1))
 
-        # Ground scroll
         ground_x -= current_speed
         if ground_x <= -WIDTH:
             ground_x = 0
 
-        # Crouch
+        
         keys = pygame.key.get_pressed()
         player.set_crouch(keys[pygame.K_DOWN])
 
-    # ---- EVENTS ----
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -143,7 +125,7 @@ while True:
                 ground_x = 0
                 pygame.mixer.music.play(-1)
 
-        # ---- SPAWNS ----
+
         if event.type == SPAWN_OBSTACLE_EVENT and not game_over:
             chance = SPAWN_DIFFICULTY_START + difficulty_ratio * (
                 SPAWN_DIFFICULTY_END - SPAWN_DIFFICULTY_START
@@ -167,7 +149,6 @@ while True:
                     birds.add(b)
                     all_sprites.add(b)
 
-    # ---- UPDATE ----
     if not game_over:
         all_sprites.update()
         score += 1
@@ -193,7 +174,7 @@ while True:
                 pygame.mixer.music.stop()
                 
 
-    # ---- DRAW ----
+
     screen.blit(background, (0, 0))
     screen.blit(ground_image, (ground_x, HEIGHT - ground_height))
     screen.blit(ground_image, (ground_x + WIDTH, HEIGHT - ground_height))

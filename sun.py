@@ -8,9 +8,8 @@ class Sun(pygame.sprite.Sprite):
         super().__init__()
         self.speed = speed
 
-        # ---- Load PNG ----
-        png_path = os.path.join("images", "sun.png")  # Sett inn filen din her
-        self.image = pygame.image.load(png_path).convert_alpha()  # Beholder gjennomsiktighet
+        png_path = os.path.join("images", "sun.png") 
+        self.image = pygame.image.load(png_path).convert_alpha()  
 
         
         width, height = 70, 70

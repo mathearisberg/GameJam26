@@ -136,7 +136,5 @@ def show_start_screen():
 
 if __name__ == "__main__":
     show_start_screen()
-
-    # Import here to avoid circular init issues
-    from demo import run_game
+    from console import run_game
     run_game()
