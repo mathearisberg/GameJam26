@@ -13,7 +13,6 @@ For å starte spillet, kjører du følgende kommando i terminalen:
 - Niklas
 
 # Kontroller for spillet
-- ⬆️ / Space – Hopp
 - ⬇️ / Down Arrow – Duck
 - R - For restart
 
