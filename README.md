@@ -4,15 +4,18 @@ Velkommen til "Growing Plant", et spill inspirert av klassiske spill med noen to
 
 # Hvordan kjøre spillet? 
 For å starte spillet, kjører du følgende kommando i terminalen: 
-
---> python3 startplay.py
-
+▶️ python/python3 startplay.py
 
 # Gruppe
 - Anastasiya 
 - Elise
 - Mathea
 - Niklas
+
+# Kontroller for spillet
+- ⬆️ / Space – Hopp
+- ⬇️ / Down Arrow – Duck
+- R - For restart
 
 # INFO
 Spillet er ikke helt ferdigpolert. Vær oppmerksom på at både gartneren og fuglen har en usynlig ramme (hitbox) rundt seg, som er litt større enn selve figuren. Det betyr at kollisjon kan skje før du faktisk treffer figuren, så hopp litt tidligere enn du tror
