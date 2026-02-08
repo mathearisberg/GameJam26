@@ -13,6 +13,17 @@ from bird import Bird
 # INIT
 # --------------------
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load("sounds/backgorund_sound_when_playing.mp3")
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
+
+death_sound = pygame.mixer.Sound("sounds/when_you_die.mp3")
+
+sun_sound = pygame.mixer.Sound("sounds/hitting_the_sun.mp3")
+
+jump_sound = pygame.mixer.Sound("sounds/jumping.mp3")
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Growing Plant")
 clock = pygame.time.Clock()
@@ -120,6 +131,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and not game_over:
                 player.jump()
+                jump_sound.play()
 
             if event.key == pygame.K_r and game_over:
                 player = reset_game()
@@ -129,6 +141,7 @@ while True:
                 game_over = False
                 score = 0
                 ground_x = 0
+                pygame.mixer.music.play(-1)
 
         # ---- SPAWNS ----
         if event.type == SPAWN_OBSTACLE_EVENT and not game_over:
@@ -161,18 +174,24 @@ while True:
 
         if pygame.sprite.spritecollide(player, suns, True):
             player.grow()
+            sun_sound.play()
 
         if pygame.sprite.spritecollide(player, obstacles, False):
             if player.invincible:
                 pygame.sprite.spritecollide(player, obstacles, True)
             else:
                 game_over = True
+                death_sound.play()
+                pygame.mixer.music.stop()
 
         if pygame.sprite.spritecollide(player, birds, False):
             if player.invincible:
                 pygame.sprite.spritecollide(player, birds, True)
             else:
                 game_over = True
+                death_sound.play()
+                pygame.mixer.music.stop()
+                
 
     # ---- DRAW ----
     screen.blit(background, (0, 0))
