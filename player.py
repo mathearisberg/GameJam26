@@ -62,6 +62,9 @@ class Player(pygame.sprite.Sprite):
         # --- Physics ---
         self.vel_y = 0
 
+        # --- Second-tap jump boost (no timing) ---
+        self.boost_used = False
+
         self.reset_state()
 
     # --------------------
@@ -74,6 +77,7 @@ class Player(pygame.sprite.Sprite):
         self.max_jumps = 1
         self.jumps_left = self.max_jumps
         self.jump_strength = JUMP_STRENGTH
+        self.boost_used = False
 
     # --------------------
     # ACTIONS
@@ -81,9 +85,16 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.is_crouching:
             return
+
         if self.jumps_left > 0:
             self.vel_y = self.jump_strength * 1.15
             self.jumps_left -= 1
+            self.boost_used = False
+            return
+
+        if not self.boost_used and self.rect.bottom < HEIGHT:
+            self.vel_y = self.jump_strength * 1.5 
+            self.boost_used = True
 
     def grow(self):
         self.is_grown = True
@@ -135,6 +146,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT
             self.vel_y = 0
             self.jumps_left = self.max_jumps
+            self.boost_used = False
 
         # --- Invincibility timeout ---
         if self.invincible and pygame.time.get_ticks() > self.invincible_end:
