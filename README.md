@@ -1,6 +1,6 @@
 # 🌲🌳 Growing Plant 🌳🌲
 
-Velkommen til "Growing Plant", et spill inspirert av klassiske spill med noen touche tatt av Mario Bros og Flappy bird, og med stor inspirasjon av verkst der vi valgte hovedelemte som går ut på en plante som spiser en sol for å vokse og drepe gartneren i hagen.🌿🧑‍🌾☀️
+Velkommen til "Growing Plant", et spill inspirert av klassiske spill med noen touch tatt av Mario Bros og Flappy bird, og med stor inspirasjon av verkst der vi valgte hovedelemte som går ut på en plante som spiser solstråler for å vokse, og unngå å bli klipt av gartneren i hagen eller spist av fuglene i himmelen.🌿🧑‍🌾☀️
 
 # Hvordan kjøre spillet? 
 For å starte spillet, kjører du følgende kommando i terminalen: 
